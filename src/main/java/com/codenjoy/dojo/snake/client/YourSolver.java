@@ -51,11 +51,33 @@ public class YourSolver implements Solver<Board> {
     }
 
     private String resolver(Board board) {
-        List<Point> apple = board.getApples();
+        String UP = Direction.UP.toString();
+        String DOWN = Direction.DOWN.toString();
+        String LEFT = Direction.LEFT.toString();
+        String RIGHT = Direction.RIGHT.toString();
+        Point apple = board.getApples().get(0);
         Point head = board.getHead();
         List<Point> snake = board.getSnake();
-        Direction direction = board.getSnakeDirection();
-
+        Direction direction = board.getSnakeDirection();//apple[9,10] head[7,5]
+        if (apple.getY() > head.getY() && apple.getX() == head.getX()) {
+            return UP;
+        } else if (apple.getY() == head.getY() && apple.getX() > head.getX()) {
+            return RIGHT;
+        } else if (apple.getY() < head.getY() && apple.getX() == head.getX()) {
+            return DOWN;
+        } else if (apple.getY() == head.getY() && apple.getX() < head.getX()) {
+            return LEFT;
+        }
+        else if (apple.getY() > head.getY() && apple.getX() < head.getX()) {
+            return UP;
+        }
+        else if (apple.getY() > head.getY() && apple.getX() > head.getX()) {
+            return UP;
+        } else if (apple.getY() < head.getY() && apple.getX() > head.getX()) {
+            return DOWN;
+        } else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
+            return DOWN;
+        }
     }
 
     public static void main(String[] args) {
