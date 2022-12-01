@@ -77,6 +77,8 @@ public class YourSolver implements Solver<Board> {
             return DOWN;
         } else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
             return DOWN;
+        } else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
+            return DOWN;
         }
     }
 
