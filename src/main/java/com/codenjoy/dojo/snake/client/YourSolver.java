@@ -61,11 +61,14 @@ public class YourSolver implements Solver<Board> {
         Direction direction = board.getSnakeDirection();//apple[9,10] head[7,5]
         if (apple.getY() > head.getY() && apple.getX() == head.getX()) {
             return UP;
-        } else if (apple.getY() == head.getY() && apple.getX() > head.getX()) {
+        }
+        else if (apple.getY() == head.getY() && apple.getX() > head.getX()) {
             return RIGHT;
-        } else if (apple.getY() < head.getY() && apple.getX() == head.getX()) {
+        }
+        else if (apple.getY() < head.getY() && apple.getX() == head.getX()) {
             return DOWN;
-        } else if (apple.getY() == head.getY() && apple.getX() < head.getX()) {
+        }
+        else if (apple.getY() == head.getY() && apple.getX() < head.getX()) {
             return LEFT;
         }
         else if (apple.getY() > head.getY() && apple.getX() < head.getX()) {
@@ -73,13 +76,17 @@ public class YourSolver implements Solver<Board> {
         }
         else if (apple.getY() > head.getY() && apple.getX() > head.getX()) {
             return UP;
-        } else if (apple.getY() < head.getY() && apple.getX() > head.getX()) {
-            return DOWN;
-        } else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
-            return DOWN;
-        } else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
+        }
+        else if (apple.getY() < head.getY() && apple.getX() > head.getX()) {
             return DOWN;
         }
+        else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
+            return DOWN;
+        }
+        else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
+            return DOWN;
+        }
+        return UP;
     }
 
     public static void main(String[] args) {
