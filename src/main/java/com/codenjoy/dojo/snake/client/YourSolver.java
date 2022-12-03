@@ -29,6 +29,7 @@ import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.RandomDice;
+
 import java.util.List;
 
 /**
@@ -36,6 +37,10 @@ import java.util.List;
  */
 public class YourSolver implements Solver<Board> {
 
+    private static final String UP = Direction.UP.toString();
+    private static final String DOWN = Direction.DOWN.toString();
+    private static final String LEFT = Direction.LEFT.toString();
+    private static final String RIGHT = Direction.RIGHT.toString();
     private Dice dice;
     private Board board;
 
@@ -51,35 +56,58 @@ public class YourSolver implements Solver<Board> {
     }
 
     private String resolver(Board board) {
-        String UP = Direction.UP.toString();
-        String DOWN = Direction.DOWN.toString();
-        String LEFT = Direction.LEFT.toString();
-        String RIGHT = Direction.RIGHT.toString();
         Point apple = board.getApples().get(0);
+        Point stone = board.getStones().get(0);
         Point head = board.getHead();
         List<Point> snake = board.getSnake();
-        Direction direction = board.getSnakeDirection();//apple[9,10] head[7,5]
-        if (apple.getY() > head.getY() && apple.getX() == head.getX()) {
-            return UP;
-        } else if (apple.getY() == head.getY() && apple.getX() > head.getX()) {
-            return RIGHT;
-        } else if (apple.getY() < head.getY() && apple.getX() == head.getX()) {
-            return DOWN;
-        } else if (apple.getY() == head.getY() && apple.getX() < head.getX()) {
-            return LEFT;
+        Direction direction = board.getSnakeDirection();//apple[12,10] head[9,5]
+        if (head != null) {
+             if (apple.getY() == head.getY() && apple.getX() > head.getX()) {
+                //return RIGHT;
+                return stoneCheck(RIGHT, stone, head, snake);
+            }
+            else if (apple.getY() == head.getY() && apple.getX() < head.getX()) {
+                //return LEFT;
+                return stoneCheck(LEFT, stone, head, snake);
+            }
+            else if ((apple.getY() > head.getY() && apple.getX() == head.getX())
+                    || (apple.getY() > head.getY() && apple.getX() > head.getX())
+                    || (apple.getY() > head.getY() && apple.getX() < head.getX())) {
+                return stoneCheck(UP, stone, head, snake);
+            }
+            else if (apple.getY() < head.getY() && apple.getX() == head.getX()
+                    || (apple.getY() < head.getY() && apple.getX() > head.getX())
+                    || (apple.getY() < head.getY() && apple.getX() < head.getX())) {
+                //return DOWN;
+                return stoneCheck(DOWN, stone, head, snake);
+            }
+//            } else if (apple.getY() > head.getY() && apple.getX() < head.getX()) {
+//                //return UP;
+//                return stoneCheck(UP, stone, head, snake);
+//            } else if (apple.getY() > head.getY() && apple.getX() > head.getX()) {
+//                //return UP;
+//                return stoneCheck(UP, stone, head, snake);
+//            } else if (apple.getY() < head.getY() && apple.getX() > head.getX()) {
+//                //return DOWN;
+//                return stoneCheck(DOWN, stone, head, snake);
+//            } else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
+//                //return DOWN;
+//                return stoneCheck(DOWN, stone, head, snake);
         }
-        else if (apple.getY() > head.getY() && apple.getX() < head.getX()) {
-            return UP;
+        return UP;
+    }
+
+    private String stoneCheck(String direction, Point stone, Point head, List<Point> snake) {
+        if (UP.equals(direction)) {
+            return (stone.getY() == head.getY() + 1) && stone.getX() == head.getX() ? LEFT : direction;
+        } else if (DOWN.equals(direction)) {
+            return (stone.getY() == head.getY() - 1) && stone.getX() == head.getX() ? LEFT : direction;
+        } else if (LEFT.equals(direction)) {
+            return (stone.getX() == head.getX() - 1) && stone.getY() == head.getY() ? DOWN : direction;
+        } else if (RIGHT.equals(direction)) {
+            return (stone.getX() == head.getX() + 1) && stone.getY() == head.getY() ? DOWN : direction;
         }
-        else if (apple.getY() > head.getY() && apple.getX() > head.getX()) {
-            return UP;
-        } else if (apple.getY() < head.getY() && apple.getX() > head.getX()) {
-            return DOWN;
-        } else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
-            return DOWN;
-        } else if (apple.getY() < head.getY() && apple.getX() < head.getX()) {
-            return DOWN;
-        }
+        return direction;
     }
 
     public static void main(String[] args) {
@@ -89,5 +117,5 @@ public class YourSolver implements Solver<Board> {
                 new YourSolver(new RandomDice()),
                 new Board());
     }
-
 }
+
