@@ -62,24 +62,24 @@ public class YourSolver implements Solver<Board> {
         List<Point> snake = board.getSnake();
         Direction direction = board.getSnakeDirection();//apple[12,10] head[9,5]
         if (head != null) {
-             if (apple.getY() == head.getY() && apple.getX() > head.getX()) {
-                //return RIGHT;
-                return stoneCheck(RIGHT, stone, head, snake);
-            }
-            else if (apple.getY() == head.getY() && apple.getX() < head.getX()) {
-                //return LEFT;
-                return stoneCheck(LEFT, stone, head, snake);
-            }
-            else if ((apple.getY() > head.getY() && apple.getX() == head.getX())
-                    || (apple.getY() > head.getY() && apple.getX() > head.getX())
-                    || (apple.getY() > head.getY() && apple.getX() < head.getX())) {
-                return stoneCheck(UP, stone, head, snake);
-            }
-            else if (apple.getY() < head.getY() && apple.getX() == head.getX()
+            if (apple.getY() < head.getY() && apple.getX() == head.getX()
                     || (apple.getY() < head.getY() && apple.getX() > head.getX())
                     || (apple.getY() < head.getY() && apple.getX() < head.getX())) {
                 //return DOWN;
                 return stoneCheck(DOWN, stone, head, snake);
+            }
+            if ((apple.getY() > head.getY() && apple.getX() == head.getX())
+                    || (apple.getY() > head.getY() && apple.getX() > head.getX())
+                    || (apple.getY() > head.getY() && apple.getX() < head.getX())) {
+                return stoneCheck(UP, stone, head, snake);
+            }
+            if (apple.getY() == head.getY() && apple.getX() > head.getX()) {
+                //return RIGHT;
+                return stoneCheck(RIGHT, stone, head, snake);
+            }
+            if (apple.getY() == head.getY() && apple.getX() < head.getX()) {
+                //return LEFT;
+                return stoneCheck(LEFT, stone, head, snake);
             }
 //            } else if (apple.getY() > head.getY() && apple.getX() < head.getX()) {
 //                //return UP;
